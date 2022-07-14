@@ -44,7 +44,7 @@ public class FileUtil {
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             lines.stream().forEach(line -> {
                 try {
-                    bufferedWriter.write(line);
+                    bufferedWriter.write(line + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

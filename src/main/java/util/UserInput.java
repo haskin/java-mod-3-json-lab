@@ -5,14 +5,44 @@ import java.util.Set;
 
 import logger.Logger;
 
-public class UserInput {
+public class UserInput<T> {
     private static final Logger logger = Logger.getInstance();
 
-    private static String getUserInput(Scanner scanner, String prompt, Set<String> possibleAnswers,
+    public static String getUserInput(Scanner scanner, String prompt, Set<String> possibleAnswers,
             String defaultAnswer) {
         try {
             logger.log(prompt);
             String answer = scanner.nextLine().trim().toLowerCase();
+
+            if (answer.isBlank())
+                throw new Exception();
+
+            if (possibleAnswers == null)
+                return answer;
+
+            if (possibleAnswers.contains(answer))
+                return answer;
+            else
+                throw new Exception();
+        } catch (Exception e) {
+            logger.log("ERROR: This was an invalid answer." + "\"" + defaultAnswer + "\" will be used instead.", "\n");
+            return defaultAnswer;
+        }
+    }
+
+    public static Integer getUserInputNumber(Scanner scanner, String prompt, Set<String> possibleAnswers,
+            Integer defaultAnswer) {
+        try {
+            logger.log(prompt);
+            while (!scanner.hasNextInt()) {
+                while (scanner.hasNextLine()) {
+                    if (scanner.nextLine().isBlank())
+                        continue;
+                    else
+                        throw new Exception();
+                }
+            }
+            int answer = scanner.nextInt();
 
             if (possibleAnswers == null)
                 return answer;

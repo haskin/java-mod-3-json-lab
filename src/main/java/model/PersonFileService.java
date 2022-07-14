@@ -10,6 +10,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import util.FileUtil;
+import util.RandomUtil;
 import util.UserInput;
 
 // Adding a person to the list:
@@ -21,7 +22,7 @@ public class PersonFileService {
 
     public static void writePeopleList(String filePath, List<Person> people) {
         FileUtil.writeFile(filePath,
-                people.stream().map(person -> person.getName() + ",\n").collect(Collectors.toList()));
+                people.stream().map(person -> person.formatAsCSV()).collect(Collectors.toList()));
     }
 
     public static List<Person> readPeopleList(String filePath) {
@@ -29,7 +30,7 @@ public class PersonFileService {
         List<Person> people = new ArrayList<>();
         try (FileReader fileReader = new FileReader(peopleFile);
                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            bufferedReader.lines().forEach(line -> people.add(new Person(line.split(",")[0])));
+            bufferedReader.lines().forEach(line -> people.add(new Person(line)));
 
             return people;
         } catch (Exception e) {
@@ -40,7 +41,14 @@ public class PersonFileService {
     }
 
     public static Person getPerson(Scanner scanner) {
-        String name = UserInput.getPersonName(scanner);
-        return new Person(name);
+        String firstName = UserInput.getUserInput(scanner, "Choose a first name: ", null, RandomUtil.getRandomName());
+        String lastName = UserInput.getUserInput(scanner, "Choose a last name: ", null, RandomUtil.getRandomName());
+        int birthYear = UserInput.getUserInputNumber(scanner, "Choose a birth year: ", null,
+                RandomUtil.getRandomYear());
+        int birthMonth = UserInput.getUserInputNumber(scanner, "Choose a birth month: ", null,
+                RandomUtil.getRandomMonth());
+        int birthDay = UserInput.getUserInputNumber(scanner, "Choose a birth day: ", null, RandomUtil.getRandomDay());
+
+        return new Person(firstName, lastName, birthYear, birthMonth, birthDay);
     }
 }

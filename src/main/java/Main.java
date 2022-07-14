@@ -53,10 +53,11 @@ public class Main {
                         people.add(PersonFileService.getPerson(scanner));
                         break;
                     case "2":
-                        logger.log("The current people in the list are:", "\n");
                         StringBuilder stringBuilder = new StringBuilder();
-                        people.stream().map(person -> person.getName() + ", ").forEach(stringBuilder::append);
-                        logger.log(stringBuilder.toString(), "\n");
+                        stringBuilder.append("The current people in the list are:\n");
+                        people.stream().map(person -> "\t" + person.formatAsCSV() + "\n")
+                                .forEach(stringBuilder::append);
+                        logger.log(stringBuilder.toString());
                         break;
                     case "3":
                         logger.log("Writing to file", "\n");
