@@ -15,41 +15,46 @@ public class Main {
     private static final Logger logger = Logger.getInstance();
 
     private static final String FILE_PATH = "/src/main/java/person.csv";
+    private static final String JSON_FILE_PATH = "/src/main/java/person.json";
+
 
     private static List<Person> people = new ArrayList<>();
 
     public static void main(String[] args) {
-        PrintService printService = new JsonPrintService();
+        PrintService printService = new CsvPrintService();
+        PersonIOService personIOService = new CsvIOService();
+        String filePath = FILE_PATH;
+
         try (Scanner scanner = new Scanner(System.in)) {
             // boolean restoreFromList = UserInput.restoreFromList(scanner);
             boolean restoreFromList = UserInput.restoreFromList(scanner);
 
             if (restoreFromList) {
                 logger.log("Restoring file.", "\n");
-                if (!FileUtil.fileExists(FILE_PATH)) {
+                if (!FileUtil.fileExists(filePath)) {
                     logger.log("File not found. Creating new file", "\n");
-                    FileUtil.createNewFile(FILE_PATH);
+                    FileUtil.createNewFile(filePath);
                 } else {
                     logger.log("Reading from file.", "\n");
-                    people = PersonFileService.readPeopleList(FILE_PATH);
+                    people = personIOService.readPeopleList(filePath);
                 }
 
             } else { // Do not restore file
                 logger.log("File not restored. New file will be used.", "\n");
-                if (FileUtil.fileExists(FILE_PATH)) {
+                if (FileUtil.fileExists(filePath)) {
                     // FileUtil.createNewFile(FILE_PATH);
                     logger.log("Previous file found. File will be deleted.", "\n");
 
                 }
-                FileUtil.deleteFile(FILE_PATH);
-                FileUtil.createNewFile(FILE_PATH);
+                FileUtil.deleteFile(filePath);
+                FileUtil.createNewFile(filePath);
             }
             while (true) {
                 String choice = UserInput.chooseOption(scanner);
                 switch (choice) {
                     case "1":
                         logger.log("Adding a new person", "\n");
-                        people.add(PersonFileService.getPerson(scanner));
+                        people.add(PersonIOService.getPerson(scanner));
                         break;
                     case "2":
 //                        StringBuilder stringBuilder = new StringBuilder();
@@ -62,7 +67,7 @@ public class Main {
                         break;
                     case "3":
                         logger.log("Writing to file", "\n");
-                        PersonFileService.writePeopleList(FILE_PATH, people);
+                        personIOService.writePeopleList(filePath, people);
                         logger.log("Exiting program");
                         return;
                     default:

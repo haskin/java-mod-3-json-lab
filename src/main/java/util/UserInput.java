@@ -58,8 +58,8 @@ public class UserInput<T> {
     }
 
     public static boolean restoreFromList(Scanner scanner) {
-        String prompt = "Do you want to restore the list of people from file? (y/N): ";
-        return getUserInput(scanner, prompt, Set.of("y", "n"), "n").equalsIgnoreCase("y");
+        String prompt = "Do you want to restore the list of people from file? (Y/n): ";
+        return getUserInput(scanner, prompt, Set.of("y", "n"), "y").equalsIgnoreCase("y");
     }
 
     public static String chooseOption(Scanner scanner) {

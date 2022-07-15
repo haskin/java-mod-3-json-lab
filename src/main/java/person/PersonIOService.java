@@ -18,27 +18,11 @@ import util.UserInput;
 // Add the new person to your person's list.
 // Return the user to the 3 options from before.
 
-public class PersonFileService {
+public interface PersonIOService {
 
-    public static void writePeopleList(String filePath, List<Person> people) {
-        FileUtil.writeFile(filePath,
-                people.stream().map(person -> person.formatAsCSV()).collect(Collectors.toList()));
-    }
+     void writePeopleList(String filePath, List<Person> people);
 
-    public static List<Person> readPeopleList(String filePath) {
-        File peopleFile = FileUtil.readFile(filePath);
-        List<Person> people = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(peopleFile);
-                BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            bufferedReader.lines().forEach(line -> people.add(new Person(line)));
-
-            return people;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
+    List<Person> readPeopleList(String filePath);
 
     public static Person getPerson(Scanner scanner) {
         String firstName = UserInput.getUserInput(scanner, "Choose a first name: ", null, RandomUtil.getRandomName());
