@@ -9,19 +9,17 @@ public class JsonPrintService implements PrintService {
 
     @Override
     public void print(List<Person> people) {
+        System.out.print(outputString(people));
+    }
+
+    @Override
+    public String outputString(List<Person> people) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(people));
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(people);
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        people.stream().map(person -> {
-//            try {
-//                return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(person);
-//            } catch (Exception e) {
-//                return "";
-//            }
-//
-//        }).forEach(System.out::println);
+        return "";
     }
 }
