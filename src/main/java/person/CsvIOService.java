@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class CsvIOService implements PersonIOService{
     public void writePeopleList(String filePath, List<Person> people) {
         FileUtil.writeFile(filePath,
-                people.stream().map(person -> person.formatAsCSV()).collect(Collectors.toList()));
+                people.stream().map(Person::formatAsCSV).collect(Collectors.toList()));
     }
 
     public List<Person> readPeopleList(String filePath) {

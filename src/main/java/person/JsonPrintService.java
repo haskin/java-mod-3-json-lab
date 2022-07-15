@@ -9,7 +9,7 @@ public class JsonPrintService implements PrintService {
 
     @Override
     public void print(List<Person> people) {
-        System.out.print(outputString(people));
+        System.out.println(outputString(people));
     }
 
     @Override

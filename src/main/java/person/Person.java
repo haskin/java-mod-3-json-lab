@@ -9,6 +9,10 @@ public class Person {
     private int birthMonth;
     private int birthDay;
 
+    public Person() {
+
+    }
+
     public Person(String firstName, String lastName, int birthYear, int birthMonth, int birthDay) {
         this.firstName = firstName;
         this.lastName = lastName;

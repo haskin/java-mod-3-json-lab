@@ -21,12 +21,22 @@ public class Main {
     private static List<Person> people = new ArrayList<>();
 
     public static void main(String[] args) {
+
         PrintService printService = new CsvPrintService();
         PersonIOService personIOService = new CsvIOService();
         String filePath = FILE_PATH;
 
         try (Scanner scanner = new Scanner(System.in)) {
-            // boolean restoreFromList = UserInput.restoreFromList(scanner);
+            String fileFormat = UserInput.chooseFileFormat(scanner);
+            if(fileFormat.equals("j")) {
+                logger.log("JSON format will be used", "\n");
+                printService = new JsonPrintService();
+                personIOService = new JsonIOService();
+                filePath = JSON_FILE_PATH;
+            }
+            else
+                logger.log("CSV format will be used", "\n");
+
             boolean restoreFromList = UserInput.restoreFromList(scanner);
 
             if (restoreFromList) {
@@ -57,11 +67,6 @@ public class Main {
                         people.add(PersonIOService.getPerson(scanner));
                         break;
                     case "2":
-//                        StringBuilder stringBuilder = new StringBuilder();
-//                        stringBuilder.append("The current people in the list are:\n");
-//                        people.stream().map(person -> "\t" + person.formatAsCSV() + "\n")
-//                                .forEach(stringBuilder::append);
-//                        logger.log(stringBuilder.toString());
                         logger.log("The current people in the list are:", "\n");
                         printService.print(people);
                         break;

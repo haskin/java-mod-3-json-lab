@@ -72,6 +72,10 @@ public class UserInput<T> {
         return getUserInput(scanner, prompt, Set.of("1", "2", "3"), "2");
     }
 
+    public static String chooseFileFormat(Scanner scanner) {
+        String prompt = "Would you like to use JSON or CSV? (J/c): ";
+        return getUserInput(scanner, prompt, Set.of("j", "c"), "j");
+    }
     public static String getPersonName(Scanner scanner) {
         String prompt = "Please enter a new name for the person: ";
         return getUserInput(scanner, prompt, null, "Default");
