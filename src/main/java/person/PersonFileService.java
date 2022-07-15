@@ -1,4 +1,4 @@
-package model;
+package person;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import util.FileUtil;
 import util.RandomUtil;
 import util.UserInput;
@@ -51,4 +51,5 @@ public class PersonFileService {
 
         return new Person(firstName, lastName, birthYear, birthMonth, birthDay);
     }
+
 }

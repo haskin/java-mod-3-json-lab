@@ -3,8 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import logger.Logger;
-import model.Person;
-import model.PersonFileService;
+import person.*;
 import util.FileUtil;
 import util.UserInput;
 
@@ -20,7 +19,7 @@ public class Main {
     private static List<Person> people = new ArrayList<>();
 
     public static void main(String[] args) {
-
+        PrintService printService = new JsonPrintService();
         try (Scanner scanner = new Scanner(System.in)) {
             // boolean restoreFromList = UserInput.restoreFromList(scanner);
             boolean restoreFromList = UserInput.restoreFromList(scanner);
@@ -53,11 +52,13 @@ public class Main {
                         people.add(PersonFileService.getPerson(scanner));
                         break;
                     case "2":
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("The current people in the list are:\n");
-                        people.stream().map(person -> "\t" + person.formatAsCSV() + "\n")
-                                .forEach(stringBuilder::append);
-                        logger.log(stringBuilder.toString());
+//                        StringBuilder stringBuilder = new StringBuilder();
+//                        stringBuilder.append("The current people in the list are:\n");
+//                        people.stream().map(person -> "\t" + person.formatAsCSV() + "\n")
+//                                .forEach(stringBuilder::append);
+//                        logger.log(stringBuilder.toString());
+                        logger.log("The current people in the list are:", "\n");
+                        printService.print(people);
                         break;
                     case "3":
                         logger.log("Writing to file", "\n");

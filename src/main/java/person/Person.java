@@ -1,4 +1,6 @@
-package model;
+package person;
+
+import com.fasterxml.jackson.core.JsonFactory;
 
 public class Person {
     private String firstName;
